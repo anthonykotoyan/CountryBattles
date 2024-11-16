@@ -22,7 +22,7 @@ public class Main {
 
         // Create the game loop timer (60 FPS)
         Timer gameLoopTimer = new Timer(1000 / 60, e -> {
-            // Update game state
+
             window.update();
 
             // Repaint the renderer

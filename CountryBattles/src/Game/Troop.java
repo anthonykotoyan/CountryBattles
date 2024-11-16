@@ -5,7 +5,7 @@ import java.awt.*;
 public class Troop {
     private static int size = 10;
     private Vector2D pos; // Position of the troop
-    private double vel = 0; // Velocity
+    private double vel = 1; // Velocity
     private double angle = 0; // Angle in radians
     private String id; // Troop ID
 
@@ -19,18 +19,22 @@ public class Troop {
         double dx = vel * Math.cos(angle);
         double dy = vel * Math.sin(angle);
 
-        pos.x += dx;
-        pos.y += dy;
+        this.pos.x += dx;
+        this.pos.y += dy;
 
         // Draw the troop
         g.setColor(Color.RED);
-        g.fillOval((int) pos.getX() - size / 2, (int) pos.getY() - size / 2, size, size);
+        g.fillOval((int) pos.x - size / 2, (int)this.pos.y - size / 2, size, size);
     }
 
     public void target(Troop other) {
 
-        double deltaX = other.pos.getX() - this.pos.getX();
-        double deltaY = other.pos.getY() - this.pos.getY();
+        double deltaX = other.pos.x- this.pos.x;
+        double deltaY = other.pos.y - this.pos.y;
+
         angle = Math.atan2(deltaY, deltaX);
+    }
+    public void collCheck(){
+
     }
 }
