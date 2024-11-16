@@ -12,7 +12,7 @@ public class Window extends JFrame {
         // Set up the JFrame
         setTitle("Game Window");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(1400, 900);
         setResizable(false);
         setLocationRelativeTo(null);
 

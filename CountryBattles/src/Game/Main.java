@@ -27,6 +27,7 @@ public class Main {
 
             // Repaint the renderer
             window.getRenderer().repaint();
+
         });
 
         // Start the game loop
