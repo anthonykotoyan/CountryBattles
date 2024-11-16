@@ -8,7 +8,7 @@ public class Renderer extends JPanel {
     private ManageTroops troops;
     private String country1;
     private String country2;
-    private String code1 = "NGR";
+    private String code1 = "IND";
     private String code2 = "USA";
     public Renderer() {
         setBackground(new Color(0, 100, 0)); // Light blue background
