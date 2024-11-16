@@ -16,7 +16,7 @@ public class CSVFileReader {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean isFirstLine = true;
-            int iter = 0;
+
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
 
