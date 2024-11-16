@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class CSVFileReader {
-    private String filePath;
+    private final String filePath;
 
     public CSVFileReader(String filePath) {
         this.filePath = filePath;
@@ -16,7 +16,7 @@ public class CSVFileReader {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean isFirstLine = true;
-
+            int iter = 0;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
 
@@ -26,12 +26,12 @@ public class CSVFileReader {
                         dataColumns.add(new ArrayList<>());
                     }
                     isFirstLine = false;
-                }
+                }else{
 
-                // Add values to the respective column
-                for (int i = 0; i < values.length; i++) {
-                    dataColumns.get(i).add(values[i]);
-                }
+                    // Add values to the respective column
+                    for (int i = 0; i < values.length; i++) {
+                        dataColumns.get(i).add(values[i]);
+                    }}
             }
         }
 

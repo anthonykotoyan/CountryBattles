@@ -1,5 +1,6 @@
 package Game;
 
+import javax.swing.*;
 import java.io.IOException;
 
 public class Main {
@@ -15,5 +16,20 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // Create the game window
+        Window window = new Window();
+
+        // Create the game loop timer (60 FPS)
+        Timer gameLoopTimer = new Timer(1000 / 60, e -> {
+            // Update game state
+            window.update();
+
+            // Repaint the renderer
+            window.getRenderer().repaint();
+        });
+
+        // Start the game loop
+        gameLoopTimer.start();
+
     }
 }
