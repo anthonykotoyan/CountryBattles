@@ -2,6 +2,9 @@ package Game;
 
 import java.awt.*;
 import java.util.ArrayList;
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Troop {
     private static int size = 10;
@@ -109,7 +112,9 @@ public class Troop {
         // Check if the end point is near the target's position
         double distance1 = Math.sqrt(Math.pow(endX - target.pos.x, 2) + Math.pow(endY - target.pos.y, 2));
         if (distance1 <= size) { // If the distance is within the radius of the target troop
-            target.kill(); // Target is killed
+            target.kill();
+            Main.playSound(Main.soundPath);
+
         }
 
     }
