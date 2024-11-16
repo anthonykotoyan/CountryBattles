@@ -1,6 +1,7 @@
 package Game;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Window extends JFrame {
     private Renderer renderer;
@@ -12,6 +13,7 @@ public class Window extends JFrame {
         // Set up the JFrame
         setTitle("Game Window");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(new Color(100, 255, 100));
         setSize(1400, 900);
         setResizable(false);
         setLocationRelativeTo(null);
