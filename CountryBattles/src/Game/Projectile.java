@@ -7,7 +7,7 @@ public class Projectile {
 
     private static final double GRAVITY = .2;
     private static final double MAX_VELOCITY = 1;
-
+    private static final int time = 50;
     public Vector2D pos;
     private Vector2D vel;
 
@@ -46,7 +46,7 @@ public class Projectile {
 
     public void calculateInitialVel() {
         double distance = Math.sqrt(dx * dx + dy * dy);
-        double time = 50;
+
         double velX = dx/time;
         double velY = dy/time - time*GRAVITY/2;
 

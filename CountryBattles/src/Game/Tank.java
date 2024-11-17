@@ -11,6 +11,7 @@ public class Tank extends Troop{
     private Color color;
     private Vector2D pos;
     private String type;
+    private long lastAttackTime;
 
     private int barrelLength = 30;
     private Vector2D dir;
@@ -39,7 +40,7 @@ public class Tank extends Troop{
         dir = new Vector2D(Math.cos(angle), Math.sin(angle));
 
         coolDownTime = random.nextInt(4001) + 6000;
-        new Timer(coolDownTime/2, e -> readyToShoot = true).start();
+        lastAttackTime = System.currentTimeMillis();
     }
 
 
@@ -99,17 +100,18 @@ public class Tank extends Troop{
 
     @Override
     public void attack() {
-        if (readyToShoot){
+        long currentTime = System.currentTimeMillis();
+
+        // Check if cooldown time has passed
+        if (currentTime - lastAttackTime >= coolDownTime) {
             Projectile p = new Projectile(pos, getTarget().getPos(), 10);
             dir = (new Vector2D(p.getVel())).normalize();
 
-            projectiles.add(new Projectile(pos, getTarget().getPos(), 10));
+            projectiles.add(p);
             Main.playSound("CountryBattles/src/Data/explosionHit.wav", .05f);
 
-            readyToShoot = false;
-            new Timer(coolDownTime, e -> readyToShoot = true).start();
+            lastAttackTime = currentTime; // Reset the last attack time
         }
-
     }
 
     public void updateProjectiles(Graphics g){
@@ -124,10 +126,13 @@ public class Tank extends Troop{
                         applyDamage(enemy);
                     }
                 }
-                projectiles.remove(i);
-                i--; // Adjust index after removal
+
             }
         }
+    }
+    @Override
+    public double getVel() {
+        return vel;
     }
 
 

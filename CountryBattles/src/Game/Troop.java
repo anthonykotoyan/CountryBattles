@@ -50,6 +50,8 @@ public abstract class Troop {
     public abstract void attack();
 
 
+    public abstract double getVel();
+
     public void takeDamage(double damage){
         health -= damage;
     }

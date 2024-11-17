@@ -78,10 +78,14 @@ public class ManageTroops {
 
         int numSoldiers1 = soldierCount.get(index1)/2000;
         int numTanks1 = tankCount.get(index1)/100;
+        //int numSoldiers1= 0;
+        //int numTanks1 = 20;
         int numTroops1 = numSoldiers1 + numTanks1;
 
         int numSoldiers2 = soldierCount.get(index2)/2000;
         int numTanks2 = tankCount.get(index2)/100;
+        //int numSoldiers2 = 50;
+        //int numTanks2 = 0;
         int numTroops2 = numSoldiers2 + numTanks2;
 
         troops1 = new Troop[numTroops1];

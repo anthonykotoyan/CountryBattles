@@ -97,6 +97,10 @@ public class Soldier extends Troop{
         }
 
     }
+    @Override
+    public double getVel() {
+        return vel;
+    }
 
 
 }

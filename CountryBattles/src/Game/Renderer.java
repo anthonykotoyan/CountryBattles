@@ -9,7 +9,7 @@ public class Renderer extends JPanel {
     private String country1;
     private String country2;
     private String code1 = "RUS";
-    private String code2 = "ALB";
+    private String code2 = "RUS";
     public Renderer() {
         setBackground(new Color(0, 100, 0)); // Light blue background
         setDoubleBuffered(true); // Enable double buffering
