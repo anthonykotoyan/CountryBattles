@@ -8,8 +8,8 @@ public class Renderer extends JPanel {
     private ManageTroops troops;
     private String country1;
     private String country2;
-    private String code1 = "TUN";
-    private String code2 = "ZIM";
+    private String code1 = "RUS";
+    private String code2 = "ALB";
     public Renderer() {
         setBackground(new Color(0, 100, 0)); // Light blue background
         setDoubleBuffered(true); // Enable double buffering

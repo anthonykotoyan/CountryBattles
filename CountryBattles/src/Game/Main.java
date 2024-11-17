@@ -23,8 +23,8 @@ public class Main {
         // Create the game window
         Window window = new Window();
 
-        playSound(musicPath);
-        // Create the game loop timer (60 FPS)
+        playSound(musicPath, 1);
+
         Timer gameLoopTimer = new Timer(1000 / 60, e -> {
 
             window.update();
@@ -38,15 +38,28 @@ public class Main {
         gameLoopTimer.start();
 
     }
-    public static void playSound(String filePath) {
+
+
+    public static void playSound(String filePath, float volume) {
         try {
             File soundFile = new File(filePath);
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
+
+            // Set volume using FloatControl
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+
+            // Volume is a logarithmic scale, where 0.0 is the original volume.
+            // To adjust volume, we calculate gain in decibels.
+            float gain = Math.min(Math.max(volume, 0.0f), 1.0f); // Clamp between 0.0 (mute) and 1.0 (full volume)
+            float dB = (float) (20.0 * Math.log10(gain));
+            gainControl.setValue(dB);
+
             clip.start();
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
+
 }

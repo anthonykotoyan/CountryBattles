@@ -13,6 +13,11 @@ public class Vector2D {
         this.y = y;
     }
 
+    public Vector2D(Vector2D other) {
+        this.x = other.x;
+        this.y = other.y;
+    }
+
 
 
     // Vector addition
@@ -51,5 +56,7 @@ public class Vector2D {
 
 
 
-
+    public String toString() {
+        return "x: " + x + " y: " + y;
+    }
 }
