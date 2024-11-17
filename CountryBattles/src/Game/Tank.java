@@ -39,7 +39,7 @@ public class Tank extends Troop{
         setDamage(2);
         dir = new Vector2D(Math.cos(angle), Math.sin(angle));
 
-        coolDownTime = random.nextInt(4001) + 6000;
+        coolDownTime = random.nextInt(1001) + 3000;
         lastAttackTime = System.currentTimeMillis();
     }
 
@@ -50,7 +50,7 @@ public class Tank extends Troop{
         if (isAlive()) {
             lookTo(.024);
             attack();
-            updateProjectiles(g);
+
 
             double dx = vel * Math.cos(angle);
             double dy = vel * Math.sin(angle);
@@ -59,6 +59,7 @@ public class Tank extends Troop{
 
             draw(g);
         }
+        updateProjectiles(g);
     }
 
     @Override
@@ -110,7 +111,8 @@ public class Tank extends Troop{
             projectiles.add(p);
             Main.playSound("CountryBattles/src/Data/explosionHit.wav", .05f);
 
-            lastAttackTime = currentTime; // Reset the last attack time
+            lastAttackTime = currentTime;
+            coolDownTime = random.nextInt(3001) + 5000;
         }
     }
 
@@ -124,9 +126,11 @@ public class Tank extends Troop{
                     double dist = Math.sqrt(Math.pow(enemy.pos.x - projectile.pos.x, 2) + Math.pow(enemy.pos.y - projectile.pos.y, 2));
                     if (dist < projectile.blastRange) {
                         applyDamage(enemy);
+                        System.out.println(type + " hit " + getTarget().type);
                     }
                 }
-
+                projectiles.remove(i);
+                i--;
             }
         }
     }

@@ -2,6 +2,7 @@ package Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class Soldier extends Troop{
 
@@ -9,9 +10,12 @@ public class Soldier extends Troop{
     private Vector2D pos;
     private String type;
 
-    private int vel = 1;
+
     private int size = 10;
 
+    private Random random = new Random();
+    private double vel = Math.random()*.5 +.75;
+    private double rotSpeed = (Math.random()/100)*4 + .03;
 
 
     private int swordLength = 10;
@@ -93,7 +97,7 @@ public class Soldier extends Troop{
         if (distance1 <= size) {
             applyDamage(getTarget());
             Main.playSound(Main.soundPath, .75f);
-
+            System.out.println(type + " hit " + getTarget().type);
         }
 
     }
