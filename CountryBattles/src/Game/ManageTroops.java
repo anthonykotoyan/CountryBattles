@@ -76,16 +76,16 @@ public class ManageTroops {
         int index2 = findCountryIndex(countryCodes, country2);
 
 
-//        int numSoldiers1 = soldierCount.get(index1)/2000;
-//        int numTanks1 = tankCount.get(index1)/100;
-        int numSoldiers1= 1;
-        int numTanks1 = 1;
+        int numSoldiers1 = soldierCount.get(index1)/2000;
+        int numTanks1 = tankCount.get(index1)/100;
+//        int numSoldiers1= 2;
+//        int numTanks1 = 1;
         int numTroops1 = numSoldiers1 + numTanks1;
 
-//        int numSoldiers2 = soldierCount.get(index2)/2000;
-//        int numTanks2 = tankCount.get(index2)/100;
-        int numSoldiers2 = 1;
-        int numTanks2 = 1;
+        int numSoldiers2 = soldierCount.get(index2)/2000;
+        int numTanks2 = tankCount.get(index2)/100;
+//        int numSoldiers2 = 1;
+//        int numTanks2 = 2;
         int numTroops2 = numSoldiers2 + numTanks2;
 
         troops1 = new Troop[numTroops1];

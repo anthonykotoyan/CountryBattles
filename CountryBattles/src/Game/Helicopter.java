@@ -6,20 +6,25 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Tank extends Troop{
+public class Helicopter extends Troop{
 
     private Color color;
     private Vector2D pos;
     private String type;
     private long lastAttackTime;
 
+
+
     private int barrelLength = 30;
     private Vector2D dir;
 
     private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 
-    private double vel = .25;
+    private double vel = 1.25;
     private int size = 30;
+
+    private double propellerAngle = 0;
+    private double propellerSpeed = 1;
 
     private boolean readyToShoot = false;
 
@@ -30,7 +35,7 @@ public class Tank extends Troop{
 
 
 
-    public Tank(Vector2D pos, String type, Color color, double angle) {
+    public Helicopter(Vector2D pos, String type, Color color, double angle) {
         super(pos, type, color, angle);
         this.color = super.color;
         this.pos = super.pos;
@@ -63,40 +68,44 @@ public class Tank extends Troop{
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics g){
+
+
         Graphics2D g2d = (Graphics2D) g;
+
 
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        AffineTransform originalTransform = g2d.getTransform();
+        int ovalX = (int) pos.x - size / 2;
+        int ovalY = (int) pos.y - size / 2;
+        int ovalWidth = size;
+        int ovalHeight = size;
+
+
+        g2d.setColor(Color.BLACK);
+        g2d.setStroke(new BasicStroke(3));
+
+
+        g2d.drawOval(ovalX, ovalY, ovalWidth, ovalHeight);
 
 
         g2d.setColor(color);
+        g2d.fillOval(ovalX, ovalY, ovalWidth, ovalHeight);
 
-
-        int rectWidth = size;
-        int rectHeight = size/2;
-        int rectX = (int) pos.x - rectWidth / 2;
-        int rectY = (int) pos.y - rectHeight / 2;
-
-
-        g2d.rotate(angle, pos.x, pos.y);
-
-
-        g2d.fillRect(rectX, rectY, rectWidth, rectHeight);
-
-
-        g2d.setTransform(originalTransform);
 
         g2d.setColor(Color.BLACK);
-        Vector2D barrelEndPos = new Vector2D((pos.x + barrelLength * dir.x),
-                (pos.y + barrelLength * dir.y));
+
+        g2d.drawLine((int) (pos.x + size*Math.cos(angle)) , (int) (pos.y + size*Math.sin(angle)) , (int) (pos.x + barrelLength*Math.cos(angle) ), (int) (pos.y + barrelLength*Math.sin(angle) ));
+
+        // draw propeller
+
+        propellerAngle += propellerSpeed;
+
         g2d.drawLine(
-                (int) pos.x,
-                (int) pos.y,
-                (int) barrelEndPos.x,
-                (int) barrelEndPos.y
-        );
+                (int) (pos.x) ,
+                (int) (pos.y + size*Math.sin(angle)) ,
+                (int) (pos.x + barrelLength*Math.cos(angle) ),
+                (int) (pos.y + barrelLength*Math.sin(angle) ));
     }
 
     @Override
@@ -105,7 +114,7 @@ public class Tank extends Troop{
 
         // Check if cooldown time has passed
         if (currentTime - lastAttackTime >= coolDownTime) {
-            Projectile p = new Projectile(pos, getTarget().getPos(), 10, .2);
+            Projectile p = new Projectile(pos, getTarget().getPos(), 10, 0);
             dir = (new Vector2D(p.getVel())).normalize();
 
             projectiles.add(p);

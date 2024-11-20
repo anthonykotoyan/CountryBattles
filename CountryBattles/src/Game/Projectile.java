@@ -5,8 +5,7 @@ import java.awt.*;
 
 public class Projectile {
 
-    private static final double GRAVITY = .2;
-    private static final double MAX_VELOCITY = 1;
+    private double gravity = .2;
     private static final int time = 50;
     public Vector2D pos;
     private Vector2D vel;
@@ -22,10 +21,11 @@ public class Projectile {
 
     public int blastRange = 30;
 
-    public Projectile(Vector2D pos, Vector2D target, int size) {
+    public Projectile(Vector2D pos, Vector2D target, int size, double gravity) {
         this.pos = new Vector2D(pos);
         this.target = new Vector2D(target);
         this.size = size;
+        this.gravity = gravity;
         dx = target.x - pos.x;
         dy = target.y - pos.y;
         calculateInitialVel();
@@ -35,7 +35,7 @@ public class Projectile {
         if (active) {
             pos.x += vel.x;
             pos.y += vel.y;
-            vel.y += GRAVITY;
+            vel.y += gravity;
             checkCollision();
             draw(g);
         }
@@ -45,10 +45,10 @@ public class Projectile {
     }
 
     public void calculateInitialVel() {
-        double distance = Math.sqrt(dx * dx + dy * dy);
+
 
         double velX = dx/time;
-        double velY = dy/time - time*GRAVITY/2;
+        double velY = dy/time - time*gravity/2;
 
         vel = new Vector2D(velX, velY);
     }
