@@ -86,7 +86,12 @@ public abstract class Troop {
         this.health = health;
     }
 
+    public double getHealth() {
+        return health;
+    }
+
     public void setDamage(double damage){
         this.damage = damage;
     }
+
 }

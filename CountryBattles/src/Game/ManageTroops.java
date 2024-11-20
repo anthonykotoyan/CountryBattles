@@ -50,8 +50,8 @@ public class ManageTroops {
         ArrayList<String> colorList = (ArrayList<String>) Main.data[7];
 
         ArrayList<String> soldierCountStr = (ArrayList<String>) data[2];
-
         ArrayList<String> tankCountStr = (ArrayList<String>) data[5];
+        ArrayList<String> helicopterCountStr = (ArrayList<String>) data[3];
 
         ArrayList<Integer> soldierCount = new ArrayList<>();
         for (String countStr : soldierCountStr) {
@@ -71,22 +71,35 @@ public class ManageTroops {
                 tankCount.add(0);
             }
         }
+        ArrayList<Integer> helicopterCount = new ArrayList<>();
+        for (String helicopterStr : helicopterCountStr) {
+            try {
+                helicopterCount.add(Integer.parseInt(helicopterStr));
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid troop count value: " + helicopterStr);
+                helicopterCount.add(0);
+            }
+        }
 
         int index1 = findCountryIndex(countryCodes, country1);
         int index2 = findCountryIndex(countryCodes, country2);
 
 
-        int numSoldiers1 = soldierCount.get(index1)/2000;
-        int numTanks1 = tankCount.get(index1)/100;
-//        int numSoldiers1= 2;
-//        int numTanks1 = 1;
-        int numTroops1 = numSoldiers1 + numTanks1;
+//        int numSoldiers1 = soldierCount.get(index1)/2000;
+//        int numTanks1 = tankCount.get(index1)/100;
+//        int numHelicopters1 = helicopterCount.get(index1)/100;
+        int numHelicopters1 = 1;
+        int numSoldiers1= 2;
+        int numTanks1 = 1;
+        int numTroops1 = numSoldiers1 + numTanks1 + numHelicopters1;
 
-        int numSoldiers2 = soldierCount.get(index2)/2000;
-        int numTanks2 = tankCount.get(index2)/100;
-//        int numSoldiers2 = 1;
-//        int numTanks2 = 2;
-        int numTroops2 = numSoldiers2 + numTanks2;
+//        int numSoldiers2 = soldierCount.get(index2)/2000;
+//        int numTanks2 = tankCount.get(index2)/100;
+//        int numHelicopters2 = helicopterCount.get(index2)/100;
+        int numHelicopters2 = 1;
+        int numSoldiers2 = 1;
+        int numTanks2 = 2;
+        int numTroops2 = numSoldiers2 + numTanks2 + numHelicopters2;
 
         troops1 = new Troop[numTroops1];
         troops1AliveIdx = new ArrayList<Integer>();
@@ -104,6 +117,12 @@ public class ManageTroops {
             troops1[i+numSoldiers1] = new Tank(
                     new Vector2D(rand.nextInt(600), rand.nextInt(900)),
                     "t", Color.decode(colorList.get(index1)), 0
+            );
+        }
+        for (int i = 0; i < numHelicopters1; i++) {
+            troops1[i+numSoldiers1+numTanks1] = new Helicopter(
+                    new Vector2D(rand.nextInt(600), rand.nextInt(900)),
+                    "h", Color.decode(colorList.get(index1)), 0
             );
         }
 
@@ -125,6 +144,12 @@ public class ManageTroops {
             troops2[i+numSoldiers2] = new Tank(
                     new Vector2D(rand.nextInt(600)+800, rand.nextInt(900)),
                     "t", Color.decode(colorList.get(index2)), Math.PI
+            );
+        }
+        for (int i = 0; i < numHelicopters2; i++) {
+            troops2[i+numSoldiers2+numTanks2] = new Helicopter(
+                    new Vector2D(rand.nextInt(600)+800, rand.nextInt(900)),
+                    "h", Color.decode(colorList.get(index2)), Math.PI
             );
         }
 

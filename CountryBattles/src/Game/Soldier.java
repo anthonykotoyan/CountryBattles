@@ -95,9 +95,14 @@ public class Soldier extends Troop{
 
         double distance1 = Math.sqrt(Math.pow(endX - getTarget().pos.x, 2) + Math.pow(endY - getTarget().pos.y, 2));
         if (distance1 <= size) {
+
             applyDamage(getTarget());
             Main.playSound(Main.soundPath, .75f);
             System.out.println(type + " hit " + getTarget().type);
+            if (getTarget().type == "h") {
+                takeDamage(getHealth());
+
+            }
         }
 
     }
