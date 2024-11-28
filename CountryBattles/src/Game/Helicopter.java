@@ -64,68 +64,70 @@ public class Helicopter extends Troop{
             }else{
                 attack();
             }
-            draw(g);
+
         }if(drawExplosion){
             drawExplosion(g);
             drawExplosion = false;
         }
         updateProjectiles(g);
+        draw(g);
     }
 
     @Override
     public void draw(Graphics g){
+        if (isAlive()) {
+
+            Graphics2D g2d = (Graphics2D) g;
 
 
-        Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            int ovalX = (int) pos.x - size / 2;
+            int ovalY = (int) pos.y - size / 2;
+            int ovalWidth = size;
+            int ovalHeight = size;
 
 
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        int ovalX = (int) pos.x - size / 2;
-        int ovalY = (int) pos.y - size / 2;
-        int ovalWidth = size;
-        int ovalHeight = size;
+            g2d.setColor(Color.BLACK);
+            g2d.setStroke(new BasicStroke(3));
 
 
-        g2d.setColor(Color.BLACK);
-        g2d.setStroke(new BasicStroke(3));
+            g2d.drawOval(ovalX, ovalY, ovalWidth, ovalHeight);
 
 
-        g2d.drawOval(ovalX, ovalY, ovalWidth, ovalHeight);
+            g2d.setColor(color);
+            g2d.fillOval(ovalX, ovalY, ovalWidth, ovalHeight);
 
 
-        g2d.setColor(color);
-        g2d.fillOval(ovalX, ovalY, ovalWidth, ovalHeight);
+            g2d.setColor(Color.BLACK);
 
+            g2d.drawLine((int) (pos.x + size * Math.cos(angle) / 2), (int) (pos.y + size * Math.sin(angle) / 2), (int) (pos.x + barrelLength * Math.cos(angle)), (int) (pos.y + barrelLength * Math.sin(angle)));
 
-        g2d.setColor(Color.BLACK);
+            // draw propeller
 
-        g2d.drawLine((int) (pos.x + size*Math.cos(angle)/2) , (int) (pos.y + size*Math.sin(angle)/2) , (int) (pos.x + barrelLength*Math.cos(angle) ), (int) (pos.y + barrelLength*Math.sin(angle) ));
+            propellerAngle += propellerSpeed;
 
-        // draw propeller
-
-        propellerAngle += propellerSpeed;
-
-        g2d.drawLine(
-                (int) (pos.x) ,
-                (int) (pos.y) ,
-                (int) (pos.x + barrelLength*Math.cos(propellerAngle) ),
-                (int) (pos.y + barrelLength*Math.sin(propellerAngle) ));
-        g2d.drawLine(
-                (int) (pos.x) ,
-                (int) (pos.y) ,
-                (int) (pos.x + barrelLength*Math.cos(propellerAngle+Math.PI/2) ),
-                (int) (pos.y + barrelLength*Math.sin(propellerAngle+Math.PI/2) ));
-        g2d.drawLine(
-                (int) (pos.x) ,
-                (int) (pos.y) ,
-                (int) (pos.x + barrelLength*Math.cos(propellerAngle+Math.PI) ),
-                (int) (pos.y + barrelLength*Math.sin(propellerAngle+Math.PI) ));
-        g2d.drawLine(
-                (int) (pos.x) ,
-                (int) (pos.y) ,
-                (int) (pos.x + barrelLength*Math.cos(propellerAngle+Math.PI*3/2) ),
-                (int) (pos.y + barrelLength*Math.sin(propellerAngle+Math.PI*3/2) ));
+            g2d.drawLine(
+                    (int) (pos.x),
+                    (int) (pos.y),
+                    (int) (pos.x + barrelLength * Math.cos(propellerAngle)),
+                    (int) (pos.y + barrelLength * Math.sin(propellerAngle)));
+            g2d.drawLine(
+                    (int) (pos.x),
+                    (int) (pos.y),
+                    (int) (pos.x + barrelLength * Math.cos(propellerAngle + Math.PI / 2)),
+                    (int) (pos.y + barrelLength * Math.sin(propellerAngle + Math.PI / 2)));
+            g2d.drawLine(
+                    (int) (pos.x),
+                    (int) (pos.y),
+                    (int) (pos.x + barrelLength * Math.cos(propellerAngle + Math.PI)),
+                    (int) (pos.y + barrelLength * Math.sin(propellerAngle + Math.PI)));
+            g2d.drawLine(
+                    (int) (pos.x),
+                    (int) (pos.y),
+                    (int) (pos.x + barrelLength * Math.cos(propellerAngle + Math.PI * 3 / 2)),
+                    (int) (pos.y + barrelLength * Math.sin(propellerAngle + Math.PI * 3 / 2)));
+        }
     }
 
     @Override

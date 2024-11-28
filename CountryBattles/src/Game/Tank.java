@@ -27,7 +27,7 @@ public class Tank extends Troop{
     private int coolDownTime;
 
     private Random random = new Random();
-
+    private boolean firstAttack = true;
 
 
     public Tank(Vector2D pos, String type, Color color, double angle) {
@@ -39,14 +39,18 @@ public class Tank extends Troop{
         setDamage(2);
         dir = new Vector2D(Math.cos(angle), Math.sin(angle));
 
-        coolDownTime = random.nextInt(1001) + 3000;
-        lastAttackTime = System.currentTimeMillis();
+
     }
 
 
 
     @Override
     public void update(Graphics g) {
+        if (firstAttack){
+            coolDownTime = random.nextInt(1001) + 3000;
+            lastAttackTime = System.currentTimeMillis();
+            firstAttack = false;
+        }
         if (isAlive()) {
             lookTo(.024);
             attack();
@@ -57,46 +61,49 @@ public class Tank extends Troop{
             this.pos.x += dx;
             this.pos.y += dy;
 
-            draw(g);
+
         }
+        draw(g);
         updateProjectiles(g);
     }
 
     @Override
     public void draw(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
+        if (isAlive()) {
+            Graphics2D g2d = (Graphics2D) g;
 
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        AffineTransform originalTransform = g2d.getTransform();
-
-
-        g2d.setColor(color);
+            AffineTransform originalTransform = g2d.getTransform();
 
 
-        int rectWidth = size;
-        int rectHeight = size/2;
-        int rectX = (int) pos.x - rectWidth / 2;
-        int rectY = (int) pos.y - rectHeight / 2;
+            g2d.setColor(color);
 
 
-        g2d.rotate(angle, pos.x, pos.y);
+            int rectWidth = size;
+            int rectHeight = size / 2;
+            int rectX = (int) pos.x - rectWidth / 2;
+            int rectY = (int) pos.y - rectHeight / 2;
 
 
-        g2d.fillRect(rectX, rectY, rectWidth, rectHeight);
+            g2d.rotate(angle, pos.x, pos.y);
 
 
-        g2d.setTransform(originalTransform);
+            g2d.fillRect(rectX, rectY, rectWidth, rectHeight);
 
-        g2d.setColor(Color.BLACK);
-        Vector2D barrelEndPos = new Vector2D((pos.x + barrelLength * dir.x),
-                (pos.y + barrelLength * dir.y));
-        g2d.drawLine(
-                (int) pos.x,
-                (int) pos.y,
-                (int) barrelEndPos.x,
-                (int) barrelEndPos.y
-        );
+
+            g2d.setTransform(originalTransform);
+
+            g2d.setColor(Color.BLACK);
+            Vector2D barrelEndPos = new Vector2D((pos.x + barrelLength * dir.x),
+                    (pos.y + barrelLength * dir.y));
+            g2d.drawLine(
+                    (int) pos.x,
+                    (int) pos.y,
+                    (int) barrelEndPos.x,
+                    (int) barrelEndPos.y
+            );
+        }
     }
 
     @Override

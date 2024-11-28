@@ -29,8 +29,5 @@ public class Window extends JFrame {
         return renderer;
     }
 
-    public void update() {
-        // Update the renderer (or other game state)
-        renderer.update();
-    }
+
 }

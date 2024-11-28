@@ -7,28 +7,21 @@ import java.io.File;
 import java.io.IOException;
 
 public class Main {
+
+
     public static Object[] data;
     public static String soundPath = "CountryBattles/src/Data/punch2.wav";
     public static String musicPath = "CountryBattles/src/Data/music.wav";
     public static void main(String[] args) {
 
-        try {
-            CSVFileReader reader = new CSVFileReader("CountryBattles/src/Data/country_data.csv");
-            data = reader.getData();
 
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // Create the game window
         Window window = new Window();
 
         playSound(musicPath, 1);
 
         Timer gameLoopTimer = new Timer(1000 / 60, e -> {
 
-            window.update();
-
+           
             // Repaint the renderer
             window.getRenderer().repaint();
 

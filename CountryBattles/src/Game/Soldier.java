@@ -34,7 +34,9 @@ public class Soldier extends Troop{
 
     @Override
     public void update(Graphics g) {
+
         if (isAlive()) {
+
             lookTo(.05);
             attack();
             double dx = vel * Math.cos(angle);
@@ -42,8 +44,9 @@ public class Soldier extends Troop{
             this.pos.x += dx;
             this.pos.y += dy;
 
-            draw(g);
+
         }
+        draw(g);
 
     }
 
@@ -51,34 +54,35 @@ public class Soldier extends Troop{
 
     @Override
     public void draw(Graphics g){
+        if (isAlive()) {
+
+            Graphics2D g2d = (Graphics2D) g;
 
 
-        Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            int ovalX = (int) pos.x - size / 2;
+            int ovalY = (int) pos.y - size / 2;
+            int ovalWidth = size;
+            int ovalHeight = size;
 
 
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        int ovalX = (int) pos.x - size / 2;
-        int ovalY = (int) pos.y - size / 2;
-        int ovalWidth = size;
-        int ovalHeight = size;
+            g2d.setColor(Color.BLACK);
+            g2d.setStroke(new BasicStroke(3));
 
 
-        g2d.setColor(Color.BLACK);
-        g2d.setStroke(new BasicStroke(3));
+            g2d.drawOval(ovalX, ovalY, ovalWidth, ovalHeight);
 
 
-        g2d.drawOval(ovalX, ovalY, ovalWidth, ovalHeight);
+            g2d.setColor(color);
+            g2d.fillOval(ovalX, ovalY, ovalWidth, ovalHeight);
 
 
-        g2d.setColor(color);
-        g2d.fillOval(ovalX, ovalY, ovalWidth, ovalHeight);
+            g2d.setColor(Color.BLACK);
 
 
-        g2d.setColor(Color.BLACK);
-
-
-        g2d.drawLine((int) pos.x, (int) pos.y, (int) (pos.x + swordLength*Math.cos(angle) ), (int) (pos.y + swordLength*Math.sin(angle) ));
+            g2d.drawLine((int) pos.x, (int) pos.y, (int) (pos.x + swordLength * Math.cos(angle)), (int) (pos.y + swordLength * Math.sin(angle)));
+        }
     }
 
     public void attack() {
