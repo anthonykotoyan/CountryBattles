@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.IOException;
 
 public abstract class Troop {
+
+    public static final String[] troopTypes = new String[]{"s", "a", "t",   "h"};
+
     public Color color;
     public Vector2D pos;
     public String type;

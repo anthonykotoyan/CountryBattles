@@ -1,49 +1,46 @@
 package Game;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Helicopter extends Troop{
+public class Archer extends Troop{
 
     private Color color;
     private Vector2D pos;
     private String type;
     private long lastAttackTime;
+    private double attackDist = 600;
 
-    private double attackDist = 250;
-    private boolean drawExplosion = false;
     private int barrelLength = 30;
     private Vector2D dir;
 
     private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 
-    private double vel = 1.25;
-    private int size = 30;
-
-    private double propellerAngle = 0;
-    private double propellerSpeed = 1;
+    private double vel = 1;
+    private int size = 15;
 
     private boolean readyToShoot = false;
 
 
-    private int coolDownTime = 100;
+    private int coolDownTime = 1500;
 
     private Random random = new Random();
 
 
 
-    public Helicopter(Vector2D pos, String type, Color color, double angle) {
+    public Archer(Vector2D pos, String type, Color color, double angle) {
         super(pos, type, color, angle);
         this.color = super.color;
         this.pos = super.pos;
         this.type = super.type;
-        setHealth(1);
-        setDamage(.1);
+        setHealth(2);
+        setDamage(.75);
         dir = new Vector2D(Math.cos(angle), Math.sin(angle));
 
 
-        lastAttackTime = System.currentTimeMillis();
     }
 
 
@@ -65,9 +62,6 @@ public class Helicopter extends Troop{
                 attack();
             }
 
-        }if(drawExplosion){
-            drawExplosion(g);
-            drawExplosion = false;
         }
         updateProjectiles(g);
         draw(g);
@@ -101,32 +95,23 @@ public class Helicopter extends Troop{
 
             g2d.setColor(Color.BLACK);
 
-            g2d.drawLine((int) (pos.x + size * Math.cos(angle) / 2), (int) (pos.y + size * Math.sin(angle) / 2), (int) (pos.x + barrelLength * Math.cos(angle)), (int) (pos.y + barrelLength * Math.sin(angle)));
+            Vector2D barrelEndPos = new Vector2D((pos.x + barrelLength * dir.x),
+                    (pos.y + barrelLength * dir.y));
+            g2d.drawLine(
+                    (int) pos.x,
+                    (int) pos.y,
+                    (int) barrelEndPos.x,
+                    (int) barrelEndPos.y
+            );
 
-            // draw propeller
+            int bowX = (int)pos.x - 20;
+            int bowY = (int)pos.y - 20;
+            int bowDiameter = size/2 + 40;
+            int startAngle = -(int)Math.toDegrees(angle)-45;
+            int arcAngle = 90;
+            g2d.drawArc(bowX, bowY, bowDiameter, bowDiameter, startAngle, arcAngle);
 
-            propellerAngle += propellerSpeed;
 
-            g2d.drawLine(
-                    (int) (pos.x),
-                    (int) (pos.y),
-                    (int) (pos.x + barrelLength * Math.cos(propellerAngle)),
-                    (int) (pos.y + barrelLength * Math.sin(propellerAngle)));
-            g2d.drawLine(
-                    (int) (pos.x),
-                    (int) (pos.y),
-                    (int) (pos.x + barrelLength * Math.cos(propellerAngle + Math.PI / 2)),
-                    (int) (pos.y + barrelLength * Math.sin(propellerAngle + Math.PI / 2)));
-            g2d.drawLine(
-                    (int) (pos.x),
-                    (int) (pos.y),
-                    (int) (pos.x + barrelLength * Math.cos(propellerAngle + Math.PI)),
-                    (int) (pos.y + barrelLength * Math.sin(propellerAngle + Math.PI)));
-            g2d.drawLine(
-                    (int) (pos.x),
-                    (int) (pos.y),
-                    (int) (pos.x + barrelLength * Math.cos(propellerAngle + Math.PI * 3 / 2)),
-                    (int) (pos.y + barrelLength * Math.sin(propellerAngle + Math.PI * 3 / 2)));
         }
     }
 
@@ -136,11 +121,13 @@ public class Helicopter extends Troop{
 
 
         if (currentTime - lastAttackTime >= coolDownTime) {
-            Projectile p = new Projectile(pos, getTarget().getPos(), 5, 0,30, 30,Color.MAGENTA, false);
+            Projectile p = new Projectile(pos, getTarget().getPos(), 2, .2,30, 30,Color.white, false);
+            p.ifBall = false;
+            p.drawImpact = false;
             dir = (new Vector2D(p.getVel())).normalize();
 
             projectiles.add(p);
-            Main.playSound("CountryBattles/src/Data/lazer.wav", .05f);
+            Main.playSound("CountryBattles/src/Data/bow.wav", .05f);
 
             lastAttackTime = currentTime;
 
@@ -167,14 +154,7 @@ public class Helicopter extends Troop{
     public double getVel() {
         return vel;
     }
-    public void drawExplosion(Graphics g){
-        int ovalX = (int) pos.x - size / 2;
-        int ovalY = (int) pos.y - size / 2;
-        int ovalWidth = 20;
-        int ovalHeight = 20;
-        g.setColor(Color.ORANGE);
-        g.fillOval(ovalX, ovalY, ovalWidth, ovalHeight);
-    }
+
 
 
 }

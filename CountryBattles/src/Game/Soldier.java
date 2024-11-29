@@ -81,6 +81,8 @@ public class Soldier extends Troop{
             g2d.setColor(Color.BLACK);
 
 
+
+
             g2d.drawLine((int) pos.x, (int) pos.y, (int) (pos.x + swordLength * Math.cos(angle)), (int) (pos.y + swordLength * Math.sin(angle)));
         }
     }

@@ -17,7 +17,7 @@ public class Main {
 
         Window window = new Window();
 
-        playSound(musicPath, 1);
+        playSound(musicPath, .05f);
 
         Timer gameLoopTimer = new Timer(1000 / 60, e -> {
 

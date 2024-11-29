@@ -39,40 +39,40 @@ public class ManageTroops {
     }
 
     public void addTroops1(int troopIdx) {
-        this.eachTroop1[troopIdx] += 1;
-        numTroops1 += 1;
-        updateAmountTroops(troopIdx);
-    }
 
-    public void updateAmountTroops(int troopIdx) {
-        Troop newTroop;
-        Color troop1Color = new Color(0, 0, 255);
-        troops1AliveIdx = new ArrayList<>();
-        for (int i = 0; i < numTroops1; i++) {
-            troops1AliveIdx.add(i);
-        }
-        if (troopIdx == 0) {
-            newTroop = new Soldier(
-                    new Vector2D(rand.nextInt(600), rand.nextInt(900)),
-                    "s", troop1Color, 0
+        this.eachTroop1[troopIdx] += 1;numTroops1 += 1;
+
+        troops1AliveIdx.add(troops1AliveIdx.size());
+        Troop newTroop = TroopMaker.createTroop(
+                Troop.troopTypes[troopIdx],
+                new Vector2D(rand.nextInt(600), rand.nextInt(900)),
+                new Color(0, 0, 255),0
             );
-        } else if (troopIdx == 1) {
-            newTroop = new Tank(
-                    new Vector2D(rand.nextInt(600), rand.nextInt(900)),
-                    "t", troop1Color, 0);
-        } else {
-            newTroop = new Helicopter(
-                    new Vector2D(rand.nextInt(600), rand.nextInt(900)),
-                    "h", troop1Color, 0);
-        }
-
+        // append the new troop to the troop array
         Troop[] updatedTroops1 = new Troop[troops1.length + 1];
         System.arraycopy(troops1, 0, updatedTroops1, 0, troops1.length);
         updatedTroops1[updatedTroops1.length - 1] = newTroop;
-        troops1 = updatedTroops1; // Reassign to the original array variable
-
+        troops1 = updatedTroops1;
         setTargetsForTroops();
     }
+    public void addTroops2(int troopIdx) {
+
+        this.eachTroop2[troopIdx] += 1;numTroops2 += 1;
+
+        troops2AliveIdx.add(troops2AliveIdx.size());
+        Troop newTroop = TroopMaker.createTroop(
+                Troop.troopTypes[troopIdx],
+                new Vector2D(rand.nextInt(600)+800, rand.nextInt(900)),
+                new Color(255, 0, 0),Math.PI
+        );
+        // append the new troop to the troop array
+        Troop[] updatedTroops2 = new Troop[troops2.length + 1];
+        System.arraycopy(troops2, 0, updatedTroops2, 0, troops2.length);
+        updatedTroops2[updatedTroops2.length - 1] = newTroop;
+        troops2 = updatedTroops2;
+        setTargetsForTroops();
+    }
+
 
     public void createTroops() {
         troops1 = new Troop[numTroops1];
@@ -81,24 +81,21 @@ public class ManageTroops {
             troops1AliveIdx.add(i);
         }
         Color troop1Color = new Color(0, 0, 255);
-        for (int i = 0; i < eachTroop1[0]; i++) {
-            troops1[i] = new Soldier(
-                    new Vector2D(rand.nextInt(600), rand.nextInt(900)),
-                    "s", troop1Color, 0
-            );
+        int currIndex = 0;
+        for (int i = 0; i < eachTroop1.length; i++) {
+            for (int j = 0; j < eachTroop1[i]; j++) {
+
+                troops1[currIndex] =
+                        TroopMaker.createTroop(
+                                Troop.troopTypes[i],
+                                new Vector2D(rand.nextInt(600), rand.nextInt(900)),
+                                troop1Color,
+                                0
+                        );
+                currIndex++;
+            }
         }
-        for (int i = 0; i < eachTroop1[1]; i++) {
-            troops1[i + eachTroop1[0]] = new Tank(
-                    new Vector2D(rand.nextInt(600), rand.nextInt(900)),
-                    "t", troop1Color, 0
-            );
-        }
-        for (int i = 0; i < eachTroop1[2]; i++) {
-            troops1[i + eachTroop1[0] + eachTroop1[1]] = new Helicopter(
-                    new Vector2D(rand.nextInt(600), rand.nextInt(900)),
-                    "h", troop1Color, 0
-            );
-        }
+
 
         troops2 = new Troop[numTroops2];
         troops2AliveIdx = new ArrayList<>();
@@ -106,24 +103,23 @@ public class ManageTroops {
             troops2AliveIdx.add(i);
         }
         Color troop2Color = new Color(255, 0, 0);
-        for (int i = 0; i < eachTroop2[0]; i++) {
-            troops2[i] = new Soldier(
-                    new Vector2D(rand.nextInt(600) + 800, rand.nextInt(900)),
-                    "s", troop2Color, Math.PI
-            );
+        currIndex = 0;
+
+        for (int i = 0; i < eachTroop2.length; i++) {
+            System.out.println("f");
+            for (int j = 0; j < eachTroop2[i]; j++) {
+                System.out.println("d");
+                troops2[currIndex] =
+                        TroopMaker.createTroop(
+                                Troop.troopTypes[i],
+                                new Vector2D(rand.nextInt(600) + 800, rand.nextInt(900)),
+                                troop2Color,
+                                Math.PI
+                        );
+                currIndex++;
+            }
         }
-        for (int i = 0; i < eachTroop2[1]; i++) {
-            troops2[i + eachTroop2[0]] = new Tank(
-                    new Vector2D(rand.nextInt(600) + 800, rand.nextInt(900)),
-                    "t", troop2Color, Math.PI
-            );
-        }
-        for (int i = 0; i < eachTroop2[2]; i++) {
-            troops2[i + eachTroop2[0] + eachTroop2[1]] = new Helicopter(
-                    new Vector2D(rand.nextInt(600) + 800, rand.nextInt(900)),
-                    "h", troop2Color, Math.PI
-            );
-        }
+
 
         setTargetsForTroops();
     }

@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Level {
+    private static int[] prices = new int[]{10,20,30,40};
+
     private int[] enemyTroops;
     private int[] troops;
     private double money;
@@ -37,14 +39,15 @@ public class Level {
         // Create troop buttons
         for (int i = 0; i < enemyTroops.length; i++) {
             int index = i;
-            JButton troopButton = new JButton("Troop " + (i + 1) + " ($" + (index + 1) * 10 + ")");
-            troopButton.setFont(new Font("Arial", Font.PLAIN, 18));
+            double cost = prices[index];
+            JButton troopButton = new JButton("Troop " + (i + 1) + " ($" + (int)cost + ")");
+            troopButton.setFont(new Font("Arial", Font.PLAIN, 15));
 
             // Set a smaller preferred size for the buttons
             troopButton.setPreferredSize(new Dimension(150, 40));  // Smaller buttons
 
             troopButton.addActionListener(e -> {
-                double cost = (index + 1) * 10;
+
                 if (money >= cost) {
                     troops[index]++;
                     troopManager.addTroops1(index);

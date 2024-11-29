@@ -112,7 +112,7 @@ public class Tank extends Troop{
 
         // Check if cooldown time has passed
         if (currentTime - lastAttackTime >= coolDownTime) {
-            Projectile p = new Projectile(pos, getTarget().getPos(), 10, .2);
+            Projectile p = new Projectile(pos, getTarget().getPos(), 10, .2, 50, 50, Color.BLACK, true);
             dir = (new Vector2D(p.getVel())).normalize();
 
             projectiles.add(p);

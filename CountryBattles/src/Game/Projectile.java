@@ -5,10 +5,12 @@ import java.awt.*;
 
 public class Projectile {
 
-    private double gravity = .2;
-    private static final int time = 50;
+    private double gravity;
+    private int time;
     public Vector2D pos;
     private Vector2D vel;
+
+    public boolean ifBall = true;
 
     private Vector2D target;
     private double dx;
@@ -17,17 +19,25 @@ public class Projectile {
     private int size;
     public boolean active = true;
 
+    public boolean drawImpact = true;
     private boolean drawExplosion = false;
+    private boolean hitSound;
 
-    public int blastRange = 30;
-
-    public Projectile(Vector2D pos, Vector2D target, int size, double gravity) {
+    public int blastRange;
+    private Color color;
+    public Projectile(Vector2D pos, Vector2D target, int size, double gravity,int time, int blastRange, Color color, boolean hitSound) {
         this.pos = new Vector2D(pos);
         this.target = new Vector2D(target);
         this.size = size;
         this.gravity = gravity;
         dx = target.x - pos.x;
         dy = target.y - pos.y;
+        this.color = color;
+        this.time = time;
+        this.blastRange = blastRange;
+        this.hitSound =hitSound;
+
+
         calculateInitialVel();
     }
 
@@ -40,7 +50,7 @@ public class Projectile {
             draw(g);
         }
         if(drawExplosion){
-            drawExplosion(g);
+            if(drawImpact){drawExplosion(g);}
         }
     }
 
@@ -54,12 +64,25 @@ public class Projectile {
     }
 
     public void draw(Graphics g) {
-        int ovalX = (int) pos.x - size / 2;
-        int ovalY = (int) pos.y - size / 2;
-        int ovalWidth = size;
-        int ovalHeight = size;
-        g.setColor(Color.BLACK);
-        g.fillOval(ovalX, ovalY, ovalWidth, ovalHeight);
+        g.setColor(color);
+        if (ifBall) {
+            int ovalX = (int) pos.x - size / 2;
+            int ovalY = (int) pos.y - size / 2;
+            int ovalWidth = size;
+            int ovalHeight = size;
+
+            g.fillOval(ovalX, ovalY, ovalWidth, ovalHeight);
+        }else{
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setStroke(new BasicStroke(3));
+            g2d.drawLine(
+                    (int) pos.x,
+                    (int) pos.y,
+                    (int) (pos.x + vel.x),
+                    (int) (pos.y + vel.y)
+            );
+
+        }
     }
 
     public void drawExplosion(Graphics g){
@@ -76,7 +99,8 @@ public class Projectile {
     public void checkCollision() {
         double distance = Math.sqrt(Math.pow(target.x - pos.x, 2) + Math.pow(target.y - pos.y, 2));
         if (distance <= blastRange) {
-            Main.playSound("CountryBattles/src/Data/exp1.wav", 0.05f);
+            if (hitSound){
+            Main.playSound("CountryBattles/src/Data/exp1.wav", 0.05f);}
             active = false;
             drawExplosion = true;
 
