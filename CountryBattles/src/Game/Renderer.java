@@ -6,7 +6,7 @@ import java.awt.*;
 public class Renderer extends JPanel {
     private LevelManager levelManager;
     private Level[] levels = {
-            new Level(new int[]{2, 0, 0, 0}, 30),
+            new Level(new int[]{1, 0, 0, 0}, 20),
             new Level(new int[]{4, 1, 0, 0}, 50),
             new Level(new int[]{3, 1, 1, 0}, 70),
             new Level(new int[]{3, 1, 1, 1}, 120),

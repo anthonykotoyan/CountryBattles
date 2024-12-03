@@ -45,7 +45,10 @@ public class LevelManager {
                         currLevel++;
 
                     } else {
-                        currLevel = 0;
+                        levels[currLevel].livesLeft -= 1;
+                        if (levels[currLevel].livesLeft == 0){
+                            currLevel = 0;
+                        }
                     }
                     if (currLevel < levels.length) {
                         setNewLevel(renderer); // Load the next level

@@ -16,6 +16,7 @@ public class Projectile {
     private double dx;
     private double dy;
 
+
     private int size;
     public boolean active = true;
 
